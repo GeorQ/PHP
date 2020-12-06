@@ -4,6 +4,7 @@
 	<title></title>
 </head>
 <body>
+
 <?php
 	require("conn.php");
 	$date = date("Y/m/d");
@@ -58,7 +59,8 @@
 	while ($row = mysqli_fetch_array($result)){
 		echo "<form method='POST' action='changedData.php?id=".$counter."'>
 			<table>		
-					<tr><td>Question number: </td><td>".$counter."</td><td><button>Delete question</button></td></tr>
+					<tr><td>Question number: </td><td>".$counter."</td><td>
+					<input type='submit' value='Delete' name='function'></td></tr>
 
 					<tr><td>Question: </td><td>".$row['question']."</td><td>
 					<input type='text' name='userName'> (varchar)
@@ -83,8 +85,8 @@
 					<tr><td>Answer:  </td><td>".$row['answer']."</td><td>
 					<input type='text' name='Answer".$counter."'> (varchar)
 					</td></tr>
-					<input type='hidden' name='questId".$counter."' value=".$row['question_id'].">
-					<tr><td><input type='submit' value='Update'></td></tr>
+					<input type='hidden' name='questId' value=".$row['question_id'].">
+					<tr><td><input type='submit' value='Update' name='function'></td></tr>
 			</table><br><br>
 			";
 			echo "</form>";
@@ -92,6 +94,38 @@
 	}
 	//echo '<input type="submit" value="Update"> </form>';
 
+	echo    "Adding the new question to quiz.
+			<form method='POST' action='changedData.php'>
+			<table>
+			<tr><td>Question: </td><td>
+			<input type='text' name='new_question' required> (varchar)
+			</td></tr>
+
+			<tr><td>First option:  </td><td>
+			<input type='text' name='new_first_option' required> (varchar)
+			</td></tr>
+
+			<tr><td>Second option: </td><td>
+			<input type='text' name='new_second_option' required> (varchar)
+			</td></tr>
+
+			<tr><td>Third option:  </td><td>
+			<input type='text' name='new_third_option' required> (varchar)
+			</td></tr>
+
+			<tr><td>Forth option:  </td><td>
+			<input type='text' name='new_forth_option' required> (varchar)
+			</td></tr>
+
+			<tr><td>Answer:  </td><td>
+			<input type='text' name='new_answer' required> (varchar)
+			</td></tr>
+
+			<input type='hidden' name='quizId' value='$quizId'>
+			<tr><td><input type='submit' value='Add' name='function'></td></tr>
+			</table><br><br>
+			";
+			echo "</form>";
 ?>
 </body>
 </html>

@@ -6,36 +6,34 @@
 <body>
 
 <?php
-
 	require("conn.php");
-
 	if(!$conn){
-		echo "There is no conncetion";
-	}else{
-		echo "There is connection <br>" ;
+		echo "There is no conncetion with database";
 	}
-	if (!empty($_POST['userName']) and !empty($_POST['userPassword']) and !empty($_POST['type'])){
+
+	if(!empty($_POST['userName']) and !empty($_POST['userPassword']) and !empty($_POST['type'])){
 		authenticateUser();
 	}else{
 		getUserDetails();
 	}
 
 	function getUserDetails(){
-    
 		echo '
+			<h2>Login Page</h2>
 			<form method="POST">
 				<table>
-					<tr><td>Name</td><td><input type="text" name="userName"></td></tr>
-					<tr><td>Password</td><td><input type="password" name="userPassword"></td></tr>
+
+					<tr><td>Name</td><td>
+					<input type="text" name="userName" required></td></tr>
+
+					<tr><td>Password</td><td>
+					<input type="password" name="userPassword" required></td></tr>
 
 					<tr><td>Status</td><td>
-
-					<input type="radio" checked name="type" id="staff" value = "staff"/>
+					<input type="radio" name="type" id="staff" value = "staff"/>
 					<label for="staff">Staff</label> 
-
-					<input type="radio" name="type" id="student" value = "student"/>
+					<input type="radio" checked name="type" id="student" value = "student"/>
 					<label for="student">Student</label>
-
 					<br></td></tr>
 
 				</table>
@@ -59,34 +57,37 @@
 			$sql = "SELECT password, staff_id FROM staff WHERE staff_name = '$nm'"; 
 		}
 
-		if ($result = mysqli_query($conn, $sql)){
-			echo "SQL is ok <br>";
-		}else{
+		if (!$result = mysqli_query($conn, $sql)){
 			echo "Something went wrong <br>";
 		}
 
-		while ($row = mysqli_fetch_array($result)){
-			if (empty($row['password'])){
-				getUserDetails();
-			}
-			else if (password_verify($pw, $row['password'])){
-				echo "Password is good <br>";
-				session_start();
-				$_SESSION['name'] = $nm;
-				$_SESSION['type'] = $tp;
-				if($tp == "student"){
-					$_SESSION['id'] = $row['student_id'];					
-					header("Location: studentPage.php");
+		if(mysqli_num_rows($result) == 0){
+			echo "<h3>Incorrect details</h3>";
+			getUserDetails();
+		}else{
+			while ($row = mysqli_fetch_array($result)){
+				if (empty($row['password'])){
+					getUserDetails();
 				}
-				else if($tp == "staff"){
-					$_SESSION['id'] = $row['staff_id'];
-					header("Location: staffPage.php");
+				else if (password_verify($pw, $row['password'])){
+					echo "Password is good <br>";
+					session_start();
+					$_SESSION['name'] = $nm;
+					$_SESSION['type'] = $tp;
+					if($tp == "student"){
+						$_SESSION['id'] = $row['student_id'];					
+						header("Location: studentPage.php");
+					}
+					else if($tp == "staff"){
+						$_SESSION['id'] = $row['staff_id'];
+						header("Location: staffPage.php");
+					}
+				}else{
+					echo "<h3>Incorrect details</h3>";
+					getUserDetails();	
 				}
-			}else{
-				echo "Incorrect password <br>";	
 			}
 		}
-		echo "something went wrong";
 	}
 
 ?>

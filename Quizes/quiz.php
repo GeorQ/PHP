@@ -31,11 +31,11 @@
 		}
 		echo "
 		<table>		
-				<tr><td>Infoprmation about quiz:</td></tr>
-				<tr><td>Quiz name is: ".$row['quiz_name'].".</td></tr>
-				<tr><td>Quiz duration: ".$row['quiz_duration']." min.</td></tr>
-				<tr><td>Quiz available: ".$str.".</td></tr>
-				<tr><td>Quiz author: ".$row['staff_name'].".</td></tr>
+			<tr><td>Infoprmation about quiz:</td></tr>
+			<tr><td>Quiz name is: ".$row['quiz_name'].".</td></tr>
+			<tr><td>Quiz duration: ".$row['quiz_duration']." min.</td></tr>
+			<tr><td>Quiz available: ".$str.".</td></tr>
+			<tr><td>Quiz author: ".$row['staff_name'].".</td></tr>
 		</table><br><br><br>
 		";
 	}

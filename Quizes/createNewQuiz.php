@@ -11,7 +11,8 @@
 	if (!empty($_POST['questions_done'])){
 		createQuiz();
 	}
-	else if (!empty($_POST['quiz_name']) and !empty($_POST['quiz_duration']) and !empty($_POST['available']) and !empty($_POST['num_of_questions'])){
+	else if (!empty($_POST['quiz_name']) and !empty($_POST['quiz_duration']) and 
+		!empty($_POST['num_of_questions'])){
 		echo "<h2>Creation of questions for '".$_POST['quiz_name']."' </h2>";
 		$num_of_questions = $_POST['num_of_questions'];
 		$quiz_name = $_POST['quiz_name'];
